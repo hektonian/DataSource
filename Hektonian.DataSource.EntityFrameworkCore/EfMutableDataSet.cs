@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+#pragma warning disable 1998
 
 namespace Hektonian.DataSource.EntityFrameworkCore
 {
@@ -24,64 +25,44 @@ namespace Hektonian.DataSource.EntityFrameworkCore
                 );
         }
 
-        public Task<T> AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
             _db.Add(entity);
-
-            return SaveAndReloadAsync(entity);
         }
 
-        public Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
             _db.AddRange(entities);
-
-            return _db.SaveChangesAsync();
         }
 
-        public Task RemoveAsync(T entity)
+        public async Task RemoveAsync(T entity)
         {
             _db.Remove(entity);
-
-            return _db.SaveChangesAsync();
         }
 
-        public Task RemoveRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             _db.RemoveRange(entities);
-
-            return _db.SaveChangesAsync();
         }
 
-        public Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
+        public async Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
         {
             _db.RemoveRange(queryBuilder(_querySet));
-
-            return _db.SaveChangesAsync();
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _db.Update(entity);
-
-            return SaveAndReloadAsync(entity);
         }
 
-        public Task UpdateRangeAsync(IEnumerable<T> entities)
+        public async Task UpdateRangeAsync(IEnumerable<T> entities)
         {
             _db.UpdateRange(entities);
-            return _db.SaveChangesAsync();
         }
 
-        private async Task<T> SaveAndReloadAsync(T entity)
+        public Task SaveAsync()
         {
-            await _db.SaveChangesAsync()
-                     .ConfigureAwait(false);
-
-            await _db.Entry(entity)
-                     .ReloadAsync()
-                     .ConfigureAwait(false);
-
-            return entity;
+            return _db.SaveChangesAsync();
         }
     }
 }
