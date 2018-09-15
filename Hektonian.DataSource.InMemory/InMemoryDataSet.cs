@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hektonian.DataSource.InMemory.Interfaces;
+using Hektonian.DataSource.Interfaces;
 
 #pragma warning disable 1998
 

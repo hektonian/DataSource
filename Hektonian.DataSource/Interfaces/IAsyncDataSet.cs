@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Hektonian.DataSource
+namespace Hektonian.DataSource.Interfaces
 {
     public interface IAsyncReadOnlyDataSet<TSource> where TSource : class
     {

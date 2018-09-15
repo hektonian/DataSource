@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hektonian.DataSource
+namespace Hektonian.DataSource.Interfaces
 {
     public interface IAsyncMutableDataSet<T> where T : class
     {

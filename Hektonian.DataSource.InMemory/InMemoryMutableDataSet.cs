@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hektonian.DataSource.InMemory.Interfaces;
+using Hektonian.DataSource.Interfaces;
+
 #pragma warning disable 1998
 
 namespace Hektonian.DataSource.InMemory

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hektonian.DataSource.EntityFrameworkCore
