@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hektonian.DataSource", "Hektonian.DataSource\Hektonian.DataSource.csproj", "{BFF7A589-2FE4-451C-AB82-8177CB583233}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hektonian.DataSource.EntityFrameworkCore", "Hektonian.DataSource.EntityFrameworkCore\Hektonian.DataSource.EntityFrameworkCore.csproj", "{24773FAB-8027-481B-AA27-449264D7AE85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hektonian.DataSource.InMemory", "Hektonian.DataSource.InMemory\Hektonian.DataSource.InMemory.csproj", "{97251603-BCEF-459B-A196-35818D754E7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFF7A589-2FE4-451C-AB82-8177CB583233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFF7A589-2FE4-451C-AB82-8177CB583233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFF7A589-2FE4-451C-AB82-8177CB583233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFF7A589-2FE4-451C-AB82-8177CB583233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24773FAB-8027-481B-AA27-449264D7AE85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24773FAB-8027-481B-AA27-449264D7AE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24773FAB-8027-481B-AA27-449264D7AE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24773FAB-8027-481B-AA27-449264D7AE85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97251603-BCEF-459B-A196-35818D754E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97251603-BCEF-459B-A196-35818D754E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97251603-BCEF-459B-A196-35818D754E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97251603-BCEF-459B-A196-35818D754E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E0571A2-A145-4F68-A3EE-089756350DDB}
+	EndGlobalSection
+EndGlobal
