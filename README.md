@@ -26,7 +26,7 @@ SO! With all that out of the way (and probably with a few new enemies made) here
 
 Repositories are extremely susceptible to retrieving too much or too little data. Frankly, I'd be surprised if any decent application that uses repositories didn't have to deal with this issue.
 
-*"I don't see any problem in that"*  
+***"I don't see any problem in that"***  
 I hope you'll be able to say that should your application ever serve several thousand requests per second.
 
 ### Repositories are inflexible
@@ -35,7 +35,7 @@ The repository pattern is very rigid and doesn't work well with complex queries.
 While the specification -pattern alleviates this to a degree, it doesn't fully resolve the issue. Specification implementations can rarely, if ever, perform SELECT and JOIN mid-query.  
 Not to mention you'll have a folder full of glorified filter functions posing as classes with at least one per entity, most likely more than that.  
 
-*"Specifications allow me to do a single exact same query in multiple place"*  
+***"Specifications allow me to do a single exact same query in multiple place"***  
 Fair enough. But you do realize that specification is a design pattern and not a repository -only thing, right? You can use specifications with data source as well. Which brings me to the next point...
 
 ### Repository is a special case
@@ -160,7 +160,7 @@ public class Startup
     ...
     // services.AddInMemoryDataSource(); // Adds the in-memory -data source and uses the default in-memory store
     // services.AddEntityFrameworkDataSource<AppDbContext>(); // Adds entity framework core -data source and uses the given DbContext
-    // services.AddScoped<IDataSource, YourDataSourceImplementatino>();
+    // services.AddScoped<IDataSource, YourDataSourceImplementation>();
     ...
   }
 ...
@@ -242,6 +242,7 @@ public class Startup
     ...
     // services.AddInMemoryDataSource(); // Adds the in-memory -data source and uses the default in-memory store
     // services.AddEntityFrameworkDataSource<AppDbContext>(); // Adds entity framework core -data source and uses the given DbContext
+    // services.AddScoped<IDataSource, YourDataSourceImplementation>();
     ...
   }
 ...
