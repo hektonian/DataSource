@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
+
 #pragma warning disable 1998
 
-namespace Hektonian.DataSource.EntityFrameworkCore
+namespace Hektonian.DataSource.EntityFrameworkCore.Internal
 {
     internal class EfMutableDataSet<T> : IAsyncMutableDataSet<T>
     where T: class

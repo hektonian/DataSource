@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hektonian.DataSource.InMemory.Interfaces;
+using Hektonian.DataSource.InMemory.Internal;
 using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory

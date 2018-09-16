@@ -7,7 +7,7 @@ using Hektonian.DataSource.Interfaces;
 
 #pragma warning disable 1998
 
-namespace Hektonian.DataSource.InMemory
+namespace Hektonian.DataSource.InMemory.Internal
 {
     internal class InMemoryMutableDataSet<T> : IAsyncMutableDataSet<T>
     where T: class

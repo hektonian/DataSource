@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hektonian.DataSource.EntityFrameworkCore
+namespace Hektonian.DataSource.EntityFrameworkCore.Internal
 {
     internal class EfMutableDataSource<TDbContext> : IAsyncMutableDataSource
     where TDbContext : DbContext
