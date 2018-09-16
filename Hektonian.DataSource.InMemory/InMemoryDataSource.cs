@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hektonian.DataSource.InMemory.Interfaces;
 using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory
 {
-    public class InMemoryReadOnlyDataSource : IAsyncDataSource, IAsyncMutableDataSource
+    public class InMemoryDataSource : IAsyncDataSource, IAsyncMutableDataSource
     {
-        private readonly InMemoryDataStore _store;
+        private readonly IInMemoryDataStore _store;
 
-        public InMemoryReadOnlyDataSource(InMemoryDataStore store = null)
+        public InMemoryDataSource(IInMemoryDataStore store = null)
         {
             _store = store;
         }
