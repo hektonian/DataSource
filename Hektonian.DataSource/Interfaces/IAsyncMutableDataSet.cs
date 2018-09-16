@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Hektonian.DataSource.Interfaces
@@ -37,6 +38,12 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <param name="queryBuilder">Query builder function</param>
         Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder);
+
+        /// <summary>
+        /// Removes the elements that match the condition from the data source
+        /// </summary>
+        /// <param name="condition">Condition to fulfill</param>
+        Task RemoveAsync(Expression<Func<T, bool>> condition);
 
         /// <summary>
         /// Updates an entity in the data source

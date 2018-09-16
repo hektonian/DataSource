@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,11 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
         public async Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
         {
             _db.RemoveRange(queryBuilder(_querySet));
+        }
+
+        public async Task RemoveAsync(Expression<Func<T, bool>> condition)
+        {
+            _db.RemoveRange(_querySet.Where(condition));
         }
 
         public async Task UpdateAsync(T entity)
