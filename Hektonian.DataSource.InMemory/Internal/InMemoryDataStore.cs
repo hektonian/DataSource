@@ -14,9 +14,9 @@ namespace Hektonian.DataSource.InMemory.Internal
             _data = storeTypes.ToDictionary(type => type, _ => new List<object>());
         }
 
-        public InMemoryDataStore(Dictionary<Type, List<object>> data)
+        public InMemoryDataStore(Dictionary<Type, List<object>> data = null)
         {
-            _data = data;
+            _data = data ?? new Dictionary<Type, List<object>>();
         }
 
         public ICollection<T> Set<T>() where T : class
