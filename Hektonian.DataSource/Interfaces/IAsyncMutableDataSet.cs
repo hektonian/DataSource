@@ -48,9 +48,12 @@ namespace Hektonian.DataSource.Interfaces
         /// <summary>
         /// Updates a collection of entities to the data source
         /// </summary>
-        /// <param name="entities">Entitites to update</param>
+        /// <param name="entities">Entities to update</param>
         Task UpdateRangeAsync(IEnumerable<T> entities);
 
+        /// <summary>
+        /// Saves changes to store
+        /// </summary>
         Task SaveAsync();
     }
 }

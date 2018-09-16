@@ -51,13 +51,13 @@ namespace Hektonian.DataSource.InMemory.Internal
 
         public async Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
         {
-            foreach (var entity in queryBuilder(
-                _store.Set<T>()
-                      .AsQueryable()
-            ))
+            var set = _store.Set<T>();
+
+            foreach (var entity in queryBuilder(set.AsQueryable()))
             {
-                _store.Set<T>()
-                      .Remove(entity);
+                set.Remove(entity);
+            }
+        }
             }
         }
 
@@ -84,7 +84,7 @@ namespace Hektonian.DataSource.InMemory.Internal
 
         public async Task SaveAsync()
         {
-            
+            // Not really much we can do here
         }
     }
 }
