@@ -9,6 +9,10 @@
     <RepositoryUrl>https://github.com/hektonian/DataSource.git</RepositoryUrl>
     <RepositoryType />
     <PackageLicenseUrl>https://github.com/hektonian/DataSource/blob/development/LICENSE</PackageLicenseUrl>
+    <Description>An alternative for repositories.</Description>
+    <PackageTags>DataSource, data, data-access, data-access-layer, repository</PackageTags>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>

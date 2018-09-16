@@ -7,6 +7,10 @@
     <PackageLicenseUrl>https://github.com/hektonian/DataSource/blob/development/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/hektonian/DataSource</PackageProjectUrl>
     <RepositoryUrl>https://github.com/hektonian/DataSource.git</RepositoryUrl>
+    <Description>An Entity Framework Core implementation of Hektonian.DataSource</Description>
+    <PackageTags>DataSource, data, data-access, data-access-layer, repository, EntityFrameworkCore, EntityFramework, EF, O/RM, entity-framework-core</PackageTags>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
