@@ -15,7 +15,7 @@ namespace Hektonian.DataSource.EntityFrameworkCore
 
         public EfDataSource(TDbContext db)
         {
-            _db = db;
+            _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
         public IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes)

@@ -11,9 +11,9 @@ namespace Hektonian.DataSource.InMemory
     {
         private readonly IInMemoryDataStore _store;
 
-        public InMemoryDataSource(IInMemoryDataStore store = null)
+        public InMemoryDataSource(IInMemoryDataStore store)
         {
-            _store = store;
+            _store = store ?? throw new ArgumentNullException(nameof(store));
         }
 
         public IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes)
