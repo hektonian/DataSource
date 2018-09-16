@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hektonian.DataSource.InMemory.Interfaces;
 using Hektonian.DataSource.Interfaces;
@@ -58,6 +59,15 @@ namespace Hektonian.DataSource.InMemory.Internal
                 set.Remove(entity);
             }
         }
+
+        public async Task RemoveAsync(Expression<Func<T, bool>> condition)
+        {
+            var set = _store.Set<T>();
+
+            foreach (var entity in set.AsQueryable()
+                                      .Where(condition))
+            {
+                set.Remove(entity);
             }
         }
 
