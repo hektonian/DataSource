@@ -72,9 +72,9 @@ What you have is an extra dependency that most likely has even more dependencies
 That it is. So copy-paste it to your project. The `Hektonian.DataSource` package is literally four interfaces and nothing else. It's not like I can (or will, for that matter) come down on you with a lawyer in tow if you do.
 
 ***"If I want to use an ORM like EFCore for example, this would be an abstraction on abstraction just like repository and unit of work -patterns"***  
-Ok, I'm going to make another big claim: All ORM are implementations. Some are abstract implementations, yes, but implementations nevertheless. They have working code with functionality that cannot be decided on by the user. I don't want that in my code unless my code is implementating something. Abstract or otherwise.
+Ok, I'm going to make another big claim: All ORM are implementations. Some are abstract implementations, yes, but implementations nevertheless. They have working code with functionality that cannot be decided on by the user. If they have functionality, they can be made abstract.
 
-***"I don't want to use IQueryable/LINQ/Your sh*tty two-bit library"***  
+***"I don't want to use IQueryable/LINQ/Your sh\*tty two-bit library"***  
 Drop that attitude. Go on an adventure. You may very well surprise yourself.
 
 ***"Why so nitpicky about this?"***  
@@ -174,7 +174,7 @@ public class Startup
 
 It is entirely possible to use data source for repositories. This will, however, remove any and all advantages a data source has over repositories.
 
-There really isn't any reason to do this to your repository, but it will serve as an example how to implement data source as a repository -like service.
+There really isn't any reason to do this to your repository, but it will serve as an example how to implement data source in a repository -like service.
 
 ```
 public class YourAsyncRepository, IYourAsyncRepository
