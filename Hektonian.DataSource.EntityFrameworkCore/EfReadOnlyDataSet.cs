@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hektonian.DataSource.EntityFrameworkCore
 {
-    public class EfReadOnlyDataSet<T> : IAsyncReadOnlyDataSet<T>
+    internal class EfReadOnlyDataSet<T> : IAsyncReadOnlyDataSet<T>
     where T : class
     {
         private readonly IQueryable<T> _querySet;

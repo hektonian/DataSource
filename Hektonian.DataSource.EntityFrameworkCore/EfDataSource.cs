@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hektonian.DataSource.EntityFrameworkCore
 {
-    public class EfDataSource<TDbContext> : IAsyncDataSource, IAsyncMutableDataSource
+    public class EfDataSource<TDbContext> : IAsyncDataSource
     where TDbContext : DbContext
     {
         private readonly TDbContext _db;
@@ -32,24 +32,14 @@ namespace Hektonian.DataSource.EntityFrameworkCore
         public Task<T> MutateAsync<T>(Func<IAsyncMutableDataSource, Task<T>> mutator)
         where T: class
         {
-            return mutator(this);
+            return mutator(new EfMutableDataSource<TDbContext>(_db));
         }
 
         public Task MutateAsync(Func<IAsyncMutableDataSource, Task> mutator)
         {
-            return mutator(this);
+            return mutator(new EfMutableDataSource<TDbContext>(_db));
         }
 
-        public IAsyncMutableDataSet<T> Mutate<T>(IEnumerable<string> includes)
-        where T: class
-        {
-            return new EfAsyncMutableDataSet<T>(_db, includes);
-        }
-
-        public IAsyncMutableDataSet<T> Mutate<T>(params string[] includes)
-        where T: class
-        {
-            return new EfAsyncMutableDataSet<T>(_db, includes);
-        }
+        
     }
 }

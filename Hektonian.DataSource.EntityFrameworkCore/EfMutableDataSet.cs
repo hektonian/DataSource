@@ -9,13 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hektonian.DataSource.EntityFrameworkCore
 {
-    public class EfAsyncMutableDataSet<T> : IAsyncMutableDataSet<T>
+    internal class EfMutableDataSet<T> : IAsyncMutableDataSet<T>
     where T: class
     {
         private readonly DbContext _db;
         private readonly IQueryable<T> _querySet;
 
-        public EfAsyncMutableDataSet(DbContext db, IEnumerable<string> navigationPropertyPaths = null)
+        public EfMutableDataSet(DbContext db, IEnumerable<string> navigationPropertyPaths = null)
         {
             _db = db;
             navigationPropertyPaths = navigationPropertyPaths ?? Array.Empty<string>();
