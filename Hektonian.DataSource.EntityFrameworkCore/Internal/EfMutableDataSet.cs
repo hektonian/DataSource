@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
+
 #pragma warning disable 1998
 
-namespace Hektonian.DataSource.EntityFrameworkCore
+namespace Hektonian.DataSource.EntityFrameworkCore.Internal
 {
-    public class EfAsyncMutableDataSet<T> : IAsyncMutableDataSet<T>
+    internal class EfMutableDataSet<T> : IAsyncMutableDataSet<T>
     where T: class
     {
         private readonly DbContext _db;
         private readonly IQueryable<T> _querySet;
 
-        public EfAsyncMutableDataSet(DbContext db, IEnumerable<string> navigationPropertyPaths = null)
+        public EfMutableDataSet(DbContext db, IEnumerable<string> navigationPropertyPaths = null)
         {
             _db = db;
             navigationPropertyPaths = navigationPropertyPaths ?? Array.Empty<string>();

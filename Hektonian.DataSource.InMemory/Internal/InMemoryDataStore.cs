@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hektonian.DataSource.InMemory.Interfaces;
 
-namespace Hektonian.DataSource.InMemory
+namespace Hektonian.DataSource.InMemory.Internal
 {
-    public class InMemoryDataStore : IInMemoryDataStore
+    internal class InMemoryDataStore : IInMemoryDataStore
     {
         private readonly Dictionary<Type, List<object>> _data;
 

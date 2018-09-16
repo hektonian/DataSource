@@ -8,9 +8,9 @@ using Hektonian.DataSource.Interfaces;
 
 #pragma warning disable 1998
 
-namespace Hektonian.DataSource.InMemory
+namespace Hektonian.DataSource.InMemory.Internal
 {
-    public class InMemoryDataSet<T> : IAsyncReadOnlyDataSet<T> where T : class
+    internal class InMemoryDataSet<T> : IAsyncReadOnlyDataSet<T> where T : class
     {
         private readonly IInMemoryDataStore _store;
         private readonly IEnumerable<string> _includes;
