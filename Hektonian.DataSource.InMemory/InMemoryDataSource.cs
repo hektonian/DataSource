@@ -42,13 +42,13 @@ namespace Hektonian.DataSource.InMemory
         public IAsyncMutableDataSet<T> Mutate<T>(IEnumerable<string> includes)
         where T: class
         {
-            throw new NotImplementedException();
+            return new InMemoryMutableDataSet<T>(_store);
         }
 
         public IAsyncMutableDataSet<T> Mutate<T>(params string[] includes)
         where T: class
         {
-            throw new NotImplementedException();
+            return new InMemoryMutableDataSet<T>(_store);
         }
     }
 }
