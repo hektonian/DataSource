@@ -3,9 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Authors>hektonian</Authors>
-    <Copyright>https://github.com/hektonian/DataSource/blob/development/LICENSE</Copyright>
-    <PackageLicenseUrl>https://github.com/hektonian/DataSource</PackageLicenseUrl>
+    <Copyright></Copyright>
+    <PackageLicenseUrl>https://github.com/hektonian/DataSource/blob/development/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/hektonian/DataSource.git</RepositoryUrl>
+    <Description>An in-memory implementation of Hektonian.DataSource</Description>
+    <PackageTags>DataSource, data, data-access, data-access-layer, repository, in-memory</PackageTags>
+    <PackageProjectUrl>https://github.com/hektonian/DataSource</PackageProjectUrl>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
