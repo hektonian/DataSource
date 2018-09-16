@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>hektonian</Authors>
+    <Company />
+    <PackageProjectUrl>https://github.com/hektonian/DataSource</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/hektonian/DataSource.git</RepositoryUrl>
+    <RepositoryType />
+    <PackageLicenseUrl>https://github.com/hektonian/DataSource/blob/development/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
 </Project>
