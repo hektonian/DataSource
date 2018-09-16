@@ -9,7 +9,7 @@ using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory
 {
-    public class InMemoryMutableDataSet<T> : IAsyncMutableDataSet<T>
+    internal class InMemoryMutableDataSet<T> : IAsyncMutableDataSet<T>
     where T: class
     {
         private readonly IInMemoryDataStore _store;

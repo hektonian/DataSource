@@ -6,7 +6,7 @@ using Hektonian.DataSource.InMemory.Interfaces;
 
 namespace Hektonian.DataSource.InMemory
 {
-    public class InMemoryDataStore : IInMemoryDataStore
+    internal class InMemoryDataStore : IInMemoryDataStore
     {
         private readonly Dictionary<Type, List<object>> _data;
 
