@@ -13,7 +13,7 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <typeparam name="TOutput">Output type of the query</typeparam>
         /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>A collection of queried entitites</returns>
+        /// <returns>A collection of queried entities</returns>
         Task<IEnumerable<TOutput>> GetAllAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
 
         /// <summary>
