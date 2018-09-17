@@ -29,7 +29,7 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
         /// </summary>
         /// <typeparam name="TOutput">Output type of the query</typeparam>
         /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>A collection of queried entitites</returns>
+        /// <returns>A collection of queried entities</returns>
         public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return await queryBuilder(_querySet)
@@ -90,32 +90,6 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
 
         /// <inheritdoc />
         /// <summary>
-        /// Selects the last element from the queried data
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The last element in a query</returns>
-        public Task<TOutput> LastAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
-            return queryBuilder(_querySet)
-               .LastAsync();
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the last element from the queried data or default if query result is empty
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The last element in a query or default</returns>
-        public Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
-            return queryBuilder(_querySet)
-               .LastOrDefaultAsync();
-        }
-
-        /// <inheritdoc />
-        /// <summary>
         /// Selects a list of entities that fulfill the given condition from the data source
         /// </summary>
         /// <param name="condition">Condition the entities must fulfill</param>
@@ -169,28 +143,6 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
         public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.SingleOrDefaultAsync(condition);
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the last element in data set that matches the given condition
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The last element in data set that matches the condition</returns>
-        public Task<T> LastAsync(Expression<Func<T, bool>> condition)
-        {
-            return _querySet.LastAsync(condition);
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the last element in data set that matches the given condition or default value if none found
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The last element in data set that matches the condition or default</returns>
-        public Task<T> LastOrDefaultAsync(Expression<Func<T, bool>> condition)
-        {
-            return _querySet.LastOrDefaultAsync(condition);
         }
     }
 }

@@ -49,22 +49,6 @@ namespace Hektonian.DataSource.Interfaces
         Task<TOutput> SingleOrDefaultAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
 
         /// <summary>
-        /// Selects the last element from the queried data
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The last element in a query</returns>
-        Task<TOutput> LastAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
-
-        /// <summary>
-        /// Selects the last element from the queried data or default if query result is empty
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The last element in a query or default</returns>
-        Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
-
-        /// <summary>
         /// Selects a list of entities that fulfill the given condition from the data source
         /// </summary>
         /// <param name="condition">Condition the entities must fulfill</param>
@@ -98,19 +82,5 @@ namespace Hektonian.DataSource.Interfaces
         /// <param name="condition">Condition to fulfill</param>
         /// <returns>A single element in data set that matches the condition or default</returns>
         Task<TSource> SingleOrDefaultAsync(Expression<Func<TSource, bool>> condition);
-
-        /// <summary>
-        /// Selects the last element in data set that matches the given condition
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The last element in data set that matches the condition</returns>
-        Task<TSource> LastAsync(Expression<Func<TSource, bool>> condition);
-
-        /// <summary>
-        /// Selects the last element in data set that matches the given condition or default value if none found
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The last element in data set that matches the condition or default</returns>
-        Task<TSource> LastOrDefaultAsync(Expression<Func<TSource, bool>> condition);
     }
 }

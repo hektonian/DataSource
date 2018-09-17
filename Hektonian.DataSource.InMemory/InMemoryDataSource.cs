@@ -19,13 +19,13 @@ namespace Hektonian.DataSource.InMemory
         public IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes)
         where T: class
         {
-            return new InMemoryDataSet<T>(_store, includes);
+            return new InMemoryReadOnlyDataSet<T>(_store, includes);
         }
 
         public IAsyncReadOnlyDataSet<T> Set<T>(params string[] includes)
         where T: class
         {
-            return new InMemoryDataSet<T>(_store, includes);
+            return new InMemoryReadOnlyDataSet<T>(_store, includes);
         }
 
         public Task<T> MutateAsync<T>(Func<IAsyncMutableDataSource, Task<T>> mutator)

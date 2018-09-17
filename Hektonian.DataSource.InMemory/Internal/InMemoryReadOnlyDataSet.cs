@@ -10,12 +10,12 @@ using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory.Internal
 {
-    internal class InMemoryDataSet<T> : IAsyncReadOnlyDataSet<T> where T : class
+    internal class InMemoryReadOnlyDataSet<T> : IAsyncReadOnlyDataSet<T> where T : class
     {
         private readonly IInMemoryDataStore _store;
         private readonly IEnumerable<string> _includes;
 
-        internal InMemoryDataSet(IInMemoryDataStore store, IEnumerable<string> includes)
+        internal InMemoryReadOnlyDataSet(IInMemoryDataStore store, IEnumerable<string> includes)
         {
             _store = store;
             _includes = includes;
@@ -66,20 +66,6 @@ namespace Hektonian.DataSource.InMemory.Internal
                          .SingleOrDefault(condition);
         }
 
-        public async Task<T> LastAsync(Expression<Func<T, bool>> condition)
-        {
-            return _store.Set<T>()
-                         .AsQueryable()
-                         .Last(condition);
-        }
-
-        public async Task<T> LastOrDefaultAsync(Expression<Func<T, bool>> condition)
-        {
-            return _store.Set<T>()
-                         .AsQueryable()
-                         .LastOrDefault(condition);
-        }
-
         public async Task<TOutput> FirstAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(
@@ -114,24 +100,6 @@ namespace Hektonian.DataSource.InMemory.Internal
                           .AsQueryable()
                 )
                .SingleOrDefault();
-        }
-
-        public async Task<TOutput> LastAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
-            return queryBuilder(
-                    _store.Set<T>()
-                          .AsQueryable()
-                )
-               .Last();
-        }
-
-        public async Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
-            return queryBuilder(
-                    _store.Set<T>()
-                          .AsQueryable()
-                )
-               .LastOrDefault();
         }
     }
 }
