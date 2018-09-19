@@ -49,6 +49,24 @@ namespace Hektonian.DataSource.Interfaces
         Task<TOutput> SingleOrDefaultAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
 
         /// <summary>
+        /// Selects the last element from the queried data
+        /// </summary>
+        /// <typeparam name="TOutput">Output type of the query</typeparam>
+        /// <param name="queryBuilder">Query builder function</param>
+        /// <returns>The last element in a query</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
+        Task<TOutput> LastAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
+
+        /// <summary>
+        /// Selects the last element from the queried data or default if query result is empty
+        /// </summary>
+        /// <typeparam name="TOutput">Output type of the query</typeparam>
+        /// <param name="queryBuilder">Query builder function</param>
+        /// <returns>The last element in a query or default</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
+        Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder);
+
+        /// <summary>
         /// Selects a list of entities that fulfill the given condition from the data source
         /// </summary>
         /// <param name="condition">Condition the entities must fulfill</param>
@@ -60,6 +78,7 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <param name="condition">Condition to fulfill</param>
         /// <returns>The first element in data set that matches the condition</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
         Task<TSource> FirstAsync(Expression<Func<TSource, bool>> condition);
 
         /// <summary>
@@ -67,6 +86,7 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <param name="condition">Condition to fulfill</param>
         /// <returns>The first element in data set that matches the condition or default</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
         Task<TSource> FirstOrDefaultAsync(Expression<Func<TSource, bool>> condition);
 
         /// <summary>
@@ -82,5 +102,21 @@ namespace Hektonian.DataSource.Interfaces
         /// <param name="condition">Condition to fulfill</param>
         /// <returns>A single element in data set that matches the condition or default</returns>
         Task<TSource> SingleOrDefaultAsync(Expression<Func<TSource, bool>> condition);
+
+        /// <summary>
+        /// Selects the last element in data set that matches the given condition
+        /// </summary>
+        /// <param name="condition">Condition to fulfill</param>
+        /// <returns>The last element in data set that matches the condition</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
+        Task<TSource> LastAsync(Expression<Func<TSource, bool>> condition);
+
+        /// <summary>
+        /// Selects the last element in data set that matches the given condition or default value if none found
+        /// </summary>
+        /// <param name="condition">Condition to fulfill</param>
+        /// <returns>The last element in data set that matches the condition or default</returns>
+        [Obsolete("This method was deprecated in v1.0.3. See https://github.com/hektonian/DataSource#Migrations for more information", true)]
+        Task<TSource> LastOrDefaultAsync(Expression<Func<TSource, bool>> condition);
     }
 }

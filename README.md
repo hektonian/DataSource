@@ -1,8 +1,9 @@
 # DataSource
+### An alternative to the repository and unit of work -patterns.
 
-This project is an queryable alternative to the repository and unit of work -patterns.
+It is important to note that while you can use the `EntityFrameworkCore` and `InMemory` -packages in your own projects, they are not the implementations you ___have to___ use. They exist to provide an example on how you would go on to implement a data source to your data store.
 
-It is important to note that while you can use the `EFCore` and `InMemory` -packages in your own projects, they are not the implementations you *have to* use. They exist to provide example of how to implement a data source to your data store.
+***This project promises to provide only the `Hektonian.DataSource` -package.***
 
 ## NuGet packages
 
@@ -18,9 +19,9 @@ I know all of this comes down to personal preference so please take this with a 
 
 I mean, sure, on paper all actions you can take on a set of data can be filtered down to the basic CRUD. But to take the five actions of CRUD (List, Get, Create, Update, Delete) and make that *THE* thing you access your store with is a bad idea. A good start, for sure, but a really REALLY bad idea. Especially so if you're working with relational databases.
 
-With that I make the claim (there's gonna be a lot of these) that repositories do not represent anything how a modern data store should be queried or manipulated.
+***Repositories do not represent anything how a modern data store should be queried or manipulated.***
 
-SO! With all that out of the way (and probably with a few new enemies made) here's some points to why repositories are a bad idea:
+So! With all that out of the way (and probably with a few new enemies made) here's some points to why repositories are a bad idea:
 
 ### Repositories tend to over/under fetch
 
@@ -35,12 +36,12 @@ The repository pattern is very rigid and doesn't work well with complex queries.
 While the specification -pattern alleviates this to a degree, it doesn't fully resolve the issue. Specification implementations can rarely, if ever, perform SELECT and JOIN mid-query.  
 Not to mention you'll have a folder full of glorified filter functions posing as classes with at least one per entity, most likely more than that.  
 
-***"Specifications allow me to do a single exact same query in multiple place"***  
-Fair enough. But you do realize that specification is a design pattern and not a repository -only thing, right? You can use specifications with data source as well. Which brings me to the next point...
+***"Specifications allow me to do a single exact same query in multiple places"***  
+Fair enough. But you do realize that specification is a design pattern and not a repository -only thing, right? You can use specifications with data sources as well. Which brings me to the next point...
 
 ### Repository is a special case
 
-The reason for why I claim this should be clearly visible a [further down below](#as-a-data-provider-for-repositories) but the short version is that anything a repository (or unit of work) does is doable with data sources.
+The reason for why I claim this should be clearly visible a [further down below as I make a repository -like service with a data source](#as-a-data-provider-for-repositories) but the short version is that anything a repository (or unit of work) does is doable with data sources.
 
 ### Repository violates separation of concerns
 
@@ -48,19 +49,66 @@ Big claim from a nobody.
 
 The repository interface is defined in the business logic/domain, and the implementation is done in the data access/infrastructure. Sounds good, right? Probably if it weren't a repository.
 
-Let me try to explain myself:
-
-I'm sure that you've seen it in projects that use the repository pattern: A base class or interface that every business entity inherits/implements.  
-The one that tells the repository what is the key to compare against? You know the guy.
-
-When a repository is queried for a entity, it is given an identifying key (single or composite) that should match an entity in the store. Repository goes through the store and **compares the given key with the keys of entities in the store**.
-The repository has dictated to the business logic that *"any entities that pass through me should be used in this manner"*.
-
 ***"But the repository interface, entity base class/interface and business entities are all defined in the business logic/domain! They define how data access should find the entity!"***  
 They define the key(s), yes, but not how the key(s) are compared.
 
+Let me try to explain myself:
+
+I'm sure that you've seen it in projects that use the repository pattern: A base class or interface that every business entity inherits/implements.  
+The one that tells the repository what is the key to compare against? You know, something like one or both of these guys:
+```csharp
+public interface IBaseEntity<TKey>
+{
+  TKey Id { get; set; }
+}
+
+public class BaseEntity<TKey>
+{
+  public TKey Id { get; set; }
+}
+```
+
+When a repository is queried for a entity, it is given an identifying key (single or composite) that should match an entity in the store.
+Repository goes through the store and **compares the given key with the keys of entities in the store and selects the appropriate key**.
+Something along these lines:
+```csharp
+public class EfRepositoryImplementation<T, TKey> : IAsyncRepository<T>
+where T : IBaseEntity<TKey>
+{
+...
+  public async Task<T> FindById(TKey id)
+  {
+    return await _dbContext.Set<T>()
+      .FirstOrDefaultAsync( // <- This should be decided on by the business logic.
+	entity => entity.Id == id // <- Comparison operation decided for business logic.
+      );
+  }
+...
+}
+```
+
+Those two lines in repository have dictated to the business logic what entities business logic should receive.
+
 ***"The comparison is just equality, right?"***  
-Right. Except we have no way to know if data access/infrastructure has defined that comparison correctly or that it even compares it to the correct data. With data sources business logic/domain services gain _some_ control over this.
+Right. Except we have no way to know if data access/infrastructure has defined that comparison correctly, selects the data the correct way, or that it even compares it to the correct data.
+Let's take the previous example and make a terrible developer redo it:
+
+```csharp
+public class EfRepositoryImplementation<T, TKey> : IAsyncRepository<T>
+where T : IBaseEntity<TKey>
+{
+...
+  public async Task<T> FindById(TKey id)
+  {
+    return await _dbContext.Set<T>()
+      .LastAsync( // <- Why this should be a business logic decision.
+	entity => entity.Id != id // <- Why comparison in data access is a problem.
+      );
+  }
+...
+}
+```
+I admit that this is nitpicking and that business logic/domain services can can never have complete control over data access/infrastructure, but with data sources business logic/domain services gain better control over this.
 
 ***"I use specifications to define what keys should be used and how they're compared"***  
 You now have multiple classes that should've been a simple delegate.
@@ -69,10 +117,10 @@ You now have multiple classes that should've been a simple delegate.
 What you have is an extra dependency that most likely has even more dependencies. Have fun managing that.
 
 ***"This library is an extra dependecy"***  
-That it is. So copy-paste it to your project. The `Hektonian.DataSource` package is literally four interfaces and nothing else. It's not like I can (or will, for that matter) come down on you with a lawyer in tow if you do.
+That it is. So copy-paste it to your project. The `Hektonian.DataSource` package is four interfaces and nothing else. It's not like I can (or will, for that matter) come down on you with a lawyer in tow if you do. You may improve, extend and expand upon it as you like.
 
 ***"If I want to use an ORM like EFCore for example, this would be an abstraction on abstraction just like repository and unit of work -patterns"***  
-Ok, I'm going to make another big claim: All ORM are implementations. Some are abstract implementations, yes, but implementations nevertheless. They have working code with functionality that cannot be decided on by the user. If they have functionality, they can be made abstract.
+Ok, I'm going to make another big claim: All ORM are implementations with implemented functionality that cannot be decided on by the user. If they have implemented functionality, they can be made abstract.
 
 ***"I don't want to use IQueryable/LINQ/Your sh\*tty two-bit library"***  
 Drop that attitude. Go on an adventure. You may very well surprise yourself.
@@ -80,13 +128,16 @@ Drop that attitude. Go on an adventure. You may very well surprise yourself.
 ***"Why so nitpicky about this?"***  
 Because I, for one, want to be able to program and develop and not be stuck with an out-dated design pattern that doesn't allow something I need to do with it. Also because I probably got a screw loose.
 
+***"This is a bad idea/bad practice"***  
+Please, enlighten me on the whats, whys and hows. I'm a two-bit developer with lots of bad ideas, I want to know what's wrong with those ideas and I need some honest feedback to do that.
+
 ## Usage
 
 ### As an alternative to repositories
 
-How data sources should be used. Implementation is entirely left up to the user.
+How data sources should be used. Implementation is left up to the user.
 
-```
+```csharp
 // Entities/Entity.cs
 public class Entity
 {
@@ -127,7 +178,7 @@ public class Service : IService
   {
     return _source
               .Set<Entity>()
-              .FirstOrDefaultAsync(entity => entity.Id ==entityId);
+              .SingleOrDefaultAsync(entity => entity.Id == entityId);
   }
   
   Task<IEnumerable<Entity>> SearchByNameAsync(string nameFragment)
@@ -172,11 +223,11 @@ public class Startup
 
 ***NOT RECOMMENDED***
 
-It is entirely possible to use data source for repositories. This will, however, remove any and all advantages a data source has over repositories.
+It is entirely possible to use data source for repositories. This will, however, remove any and all advantages data sources have over repositories.
 
-There really isn't any reason to do this to your repository, but it will serve as an example how to implement data source in a repository -like service.
+There really isn't any reason to do this, but it will serve as an example how to implement data source in a repository -like service.
 
-```
+```csharp
 public class YourAsyncRepository, IYourAsyncRepository
 {
   private readonly IAsyncDataSource _source;
@@ -197,7 +248,7 @@ public class YourAsyncRepository, IYourAsyncRepository
   {
     return _source
               .Set<T>()
-              .FirstOrDefaultAsync(entity => entity.Id == id);
+              .SingleOrDefaultAsync(entity => entity.Id == id);
   }
   
   public Task<T> AddAsync<T>(T entity)
@@ -248,3 +299,49 @@ public class Startup
 ...
 }
 ```
+
+## Migrations
+
+### From <=v1.0.2 to v1.0.3
+
+From v1.0.3 onwards all IAsyncReadOnlyDataSet's `LastAsync` and `LastOrDefaultAsync` -methods and the expression filter versions of `FirstAsync` and `FirstOrDefaultAsync` will be marked as obsolete to promote deterministic selection of entities from a data set.
+
+The deprecated methods are either duplicate functionality or rely on the order the entities are stored in the data store.
+
+##### Affected areas
+
+The following methods are duplicate functionality. Reverse the order and use FirstAsync() and FirstOrDefaultAsync()  
+
+```csharp
+interface IAsyncReadOnlyDataSet<TSource>
+  LastAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder)
+  LastOrDefaultAsync<TOutput>(Func<IQueryable<TSource>, IQueryable<TOutput>> queryBuilder)
+```
+
+The following methods trust the order data store stores it's entities. You should never trust the order of elements in a data store.  
+
+```csharp
+interface IAsyncReadOnlyDataSet<TSource>
+  FirstAsync(Expression<Func<TSource, bool>> condition)
+  FirstOrDefaultAsync(Expression<Func<TSource, bool>> condition)
+  LastAsync(Expression<Func<TSource, bool>> condition)  
+  LastOrDefaultAsync(Expression<Func<TSource, bool>> condition)  
+```
+
+If you're using any of these methods, here's what to replace them with based on the how large the query result set is:
+
+| Result set | Use                                                    |
+| ---------- | ------------------------------------------------------ |
+| 1          | Single(expression)                                     |
+| 0..1       | SingleOrDefault(expression)                            |
+| 1..N       | First(queryBuilder with ORDER BY ASC or DESC)          |
+| 0..N       | FirstOrDefault(queryBuilder with ORDER BY ASC or DESC) |
+
+## Contributors
+
+Maintained by [hektonian](https://github.com/hektonian)
+Feature requests and bug reports welcome.
+
+## Support, suggestions & feedback
+
+You can get in touch on gitter: https://gitter.im/Hektonian-DataSource
