@@ -30,6 +30,11 @@ namespace Hektonian.DataSource.InMemory.Internal
                .ToList();
         }
 
+        public Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> condition)
         {
             return _store.Set<T>()
@@ -66,6 +71,16 @@ namespace Hektonian.DataSource.InMemory.Internal
                          .SingleOrDefault(condition);
         }
 
+        public Task<T> LastAsync(Expression<Func<T, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> LastOrDefaultAsync(Expression<Func<T, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<TOutput> FirstAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(
@@ -100,6 +115,11 @@ namespace Hektonian.DataSource.InMemory.Internal
                           .AsQueryable()
                 )
                .SingleOrDefault();
+        }
+
+        public Task<TOutput> LastAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

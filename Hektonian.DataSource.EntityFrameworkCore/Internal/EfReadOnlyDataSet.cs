@@ -88,6 +88,16 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
                .SingleOrDefaultAsync();
         }
 
+        public Task<TOutput> LastAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc />
         /// <summary>
         /// Selects a list of entities that fulfill the given condition from the data source
@@ -143,6 +153,16 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
         public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.SingleOrDefaultAsync(condition);
+        }
+
+        public Task<T> LastAsync(Expression<Func<T, bool>> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> LastOrDefaultAsync(Expression<Func<T, bool>> condition)
+        {
+            throw new NotImplementedException();
         }
     }
 }
