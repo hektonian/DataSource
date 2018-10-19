@@ -9,10 +9,10 @@
     <Description>An in-memory implementation of Hektonian.DataSource</Description>
     <PackageTags>DataSource, data, data-access, data-access-layer, repository, in-memory</PackageTags>
     <PackageProjectUrl>https://github.com/hektonian/DataSource</PackageProjectUrl>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
     <FileVersion>1.0.3.0</FileVersion>
-    <Version>1.0.3-alpha1</Version>
-    <PackageReleaseNotes>https://github.com/hektonian/DataSource/releases/tag/v1.0.3-alpha1</PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
