@@ -5,6 +5,12 @@ It is important to note that while you can use the `EntityFrameworkCore` and `In
 
 ***This project promises to provide only the `Hektonian.DataSource` -package.***
 
+### Table of contents
+* [NuGet packages](#nuget-packages)
+* [Migrations](#migrations)
+* [Rationale](#rationale)
+* [Usage](#usage)
+
 ## NuGet packages
 
 | Package | Nuget |
@@ -186,7 +192,7 @@ public class Service : IService
     return _source
               .Set<Entity>()
               .GetAllAsync(data =>
-                data.Where(entity => entity.Name?.Contains(nameFragment) ?? false)
+                data.Where(entity => entity.Name.Contains(nameFragment))
               );
   }
   
@@ -304,7 +310,7 @@ public class Startup
 
 ### From <=v1.0.2 to v1.0.3
 
-From v1.0.3 onwards all IAsyncReadOnlyDataSet's `LastAsync` and `LastOrDefaultAsync` -methods and the expression filter versions of `FirstAsync` and `FirstOrDefaultAsync` will be marked as obsolete to promote deterministic selection of entities from a data set.
+From v1.0.3 onwards all IAsyncReadOnlyDataSet's `LastAsync` and `LastOrDefaultAsync` -methods and the expression filter versions of `FirstAsync` and `FirstOrDefaultAsync` have been removed to promote deterministic selection of entities from a data set.
 
 The deprecated methods are either duplicate functionality or rely on the order the entities are stored in the data store.
 
