@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 namespace Hektonian.DataSource.Interfaces
 {
     public interface IAsyncMutableDataSet<T> where T : class
+    /// <summary>
+    /// Mutation-only asynchronous data set
+    /// </summary>
     {
         /// <summary>
-        /// Adds an entity to the data source and returns an entity with database values
+        /// Adds an entity to the data source
         /// </summary>
         /// <param name="entity">Entity to add</param>
-        /// <returns>The entity as it is in the database</returns>
         Task AddAsync(T entity);
+
+        /// <summary>
+        /// Adds a collection of entities to the data source
+        /// </summary>
+        /// <param name="entities"></param>
 
         /// <summary>
         /// Adds a collection of entities to the data source
@@ -32,6 +39,11 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <param name="entities">Entities to remove</param>
         Task RemoveRangeAsync(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Removes a collection of entities from the data source
+        /// </summary>
+        /// <param name="entities">Entities to remove</param>
 
         /// <summary>
         /// Removes the elements selected by the query builder
@@ -57,6 +69,11 @@ namespace Hektonian.DataSource.Interfaces
         /// </summary>
         /// <param name="entities">Entities to update</param>
         Task UpdateRangeAsync(IEnumerable<T> entities);
+
+        /// <summary>
+        /// Updates a collection of entities to the data source
+        /// </summary>
+        /// <param name="entities">Entities to update</param>
 
         /// <summary>
         /// Saves changes to store

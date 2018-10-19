@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace Hektonian.DataSource.Interfaces
 {
     public interface IAsyncReadOnlyDataSet<TSource> where TSource : class
+    /// <summary>
+    /// Read-only asynchronous data set
+    /// </summary>
     {
         /// <summary>
         /// Selects a list of entities from the data source with a query built by queryBuilder

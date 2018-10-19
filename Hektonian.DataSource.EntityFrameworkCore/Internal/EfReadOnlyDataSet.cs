@@ -23,13 +23,6 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
                 );
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects a list of entities from the data source with a query built by queryBuilder
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>A collection of queried entities</returns>
         public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return await queryBuilder(_querySet)
@@ -37,51 +30,24 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
                         .ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the first element from the queried data
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The first element in a query</returns>
         public Task<TOutput> FirstAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(_querySet)
                .FirstAsync();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the first element from the queried data or default if query result is empty
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>The first element in a query or default</returns>
         public Task<TOutput> FirstOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(_querySet)
                .FirstOrDefaultAsync();
         }
 
-        /// <summary>
-        /// Selects a single element from the queried data
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>A single element in a query</returns>
         public Task<TOutput> SingleAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(_querySet)
                .SingleAsync();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects a single element from the queried data or default if query result is empty
-        /// </summary>
-        /// <typeparam name="TOutput">Output type of the query</typeparam>
-        /// <param name="queryBuilder">Query builder function</param>
-        /// <returns>A single element in a query or default</returns>
         public Task<TOutput> SingleOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
         {
             return queryBuilder(_querySet)
@@ -98,12 +64,6 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects a list of entities that fulfill the given condition from the data source
-        /// </summary>
-        /// <param name="condition">Condition the entities must fulfill</param>
-        /// <returns>A collection of matching entities</returns>
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> condition)
         {
             return await _querySet.Where(condition)
@@ -111,45 +71,21 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
                                   .ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the first element in data set that matches the given condition
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The first element in data set that matches the condition</returns>
         public Task<T> FirstAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.FirstAsync(condition);
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects the first element in data set that matches the given condition or default value if none found
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>The first element in data set that matches the condition or default</returns>
         public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.FirstOrDefaultAsync(condition);
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects a single element in data set that matches the given condition
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>A single element in data set that matches the condition</returns>
         public Task<T> SingleAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.SingleAsync(condition);
         }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Selects a single element in data set that matches the given condition or default value if none found
-        /// </summary>
-        /// <param name="condition">Condition to fulfill</param>
-        /// <returns>A single element in data set that matches the condition or default</returns>
         public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> condition)
         {
             return _querySet.SingleOrDefaultAsync(condition);

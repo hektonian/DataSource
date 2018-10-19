@@ -11,6 +11,16 @@ namespace Hektonian.DataSource.Interfaces
     {
         IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes) where T: class;
         IAsyncReadOnlyDataSet<T> Set<T>(params string[] includes) where T : class;
+        /// <summary>
+        /// Retrieves a read-only data set
+        /// </summary>
+        /// <param name="includes">Relation includes</param>
+        /// <returns>Read-only data set</returns>
+        /// <summary>
+        /// Creates a read-only data set
+        /// </summary>
+        /// <param name="includes">Relation includes</param>
+        /// <returns>Read-only data set</returns>
 
         /// <summary>
         /// Begins the mutation of the data source
