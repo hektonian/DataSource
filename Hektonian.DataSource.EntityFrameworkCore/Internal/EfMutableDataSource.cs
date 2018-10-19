@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Hektonian.DataSource.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,16 +16,21 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
             _db = db;
         }
 
-        public IAsyncMutableDataSet<T> Mutate<T>(IEnumerable<string> includes)
-        where T : class
+        public IAsyncMutableDataSet<TEntity> Mutate<TEntity>(IEnumerable<string> includes)
+        where TEntity : class
         {
-            return new EfMutableDataSet<T>(_db, includes);
+            if (includes == null)
+            {
+                throw new ArgumentNullException(nameof(includes));
+            }
+
+            return new EfMutableDataSet<TEntity>(_db, includes);
         }
 
-        public IAsyncMutableDataSet<T> Mutate<T>(params string[] includes)
-        where T : class
+        public IAsyncMutableDataSet<TEntity> Mutate<TEntity>(params string[] includes)
+        where TEntity : class
         {
-            return new EfMutableDataSet<T>(_db, includes);
+            return new EfMutableDataSet<TEntity>(_db, includes);
         }
     }
 }

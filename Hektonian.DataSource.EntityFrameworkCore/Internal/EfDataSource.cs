@@ -19,19 +19,19 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes)
-        where T: class
+        public IAsyncReadOnlyDataSet<TEntity> Set<TEntity>(IEnumerable<string> includes)
+        where TEntity: class
         {
             if (includes == null)
             {
                 throw new ArgumentNullException(nameof(includes));
             }
 
-            return new EfReadOnlyDataSet<T>(_db, includes);
+            return new EfReadOnlyDataSet<TEntity>(_db, includes);
         }
 
-        public IAsyncReadOnlyDataSet<T> Set<T>(params string[] includes)
-        where T: class
+        public IAsyncReadOnlyDataSet<TEntity> Set<TEntity>(params string[] includes)
+        where TEntity: class
         {
             if (includes == null)
             {
@@ -43,7 +43,7 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
                 throw new ArgumentNullException();
             }
 
-            return new EfReadOnlyDataSet<T>(_db, includes);
+            return new EfReadOnlyDataSet<TEntity>(_db, includes);
         }
 
         public Task<T> MutateAsync<T>(Func<IAsyncMutableDataSource, Task<T>> mutator)

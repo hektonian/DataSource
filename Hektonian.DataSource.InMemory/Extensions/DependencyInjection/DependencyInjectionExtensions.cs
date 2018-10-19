@@ -10,9 +10,9 @@ namespace Hektonian.DataSource.InMemory.Extensions.DependencyInjection
 {
     public static class DependencyInjectionExtensions
     {
-        public static IServiceCollection AddInMemoryDataSource<T>(this IServiceCollection services)
-        where T: class, IInMemoryDataStore
-            => services?.AddSingleton<IInMemoryDataStore, T>()
+        public static IServiceCollection AddInMemoryDataSource<TDataStore>(this IServiceCollection services)
+        where TDataStore: class, IInMemoryDataStore
+            => services?.AddSingleton<IInMemoryDataStore, TDataStore>()
                        ?.AddScoped<IAsyncDataSource, InMemoryDataSource>()
             ?? throw new ArgumentNullException(nameof(services));
 

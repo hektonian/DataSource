@@ -17,19 +17,19 @@ namespace Hektonian.DataSource.InMemory.Internal
             _store = store ?? new InMemoryDataStore();
         }
 
-        public IAsyncReadOnlyDataSet<T> Set<T>(IEnumerable<string> includes)
-        where T: class
+        public IAsyncReadOnlyDataSet<TEntity> Set<TEntity>(IEnumerable<string> includes)
+        where TEntity: class
         {
             if (includes == null)
             {
                 throw new ArgumentNullException(nameof(includes));
             }
 
-            return new InMemoryReadOnlyDataSet<T>(_store, includes);
+            return new InMemoryReadOnlyDataSet<TEntity>(_store, includes);
         }
 
-        public IAsyncReadOnlyDataSet<T> Set<T>(params string[] includes)
-        where T: class
+        public IAsyncReadOnlyDataSet<TEntity> Set<TEntity>(params string[] includes)
+        where TEntity: class
         {
             if (includes == null)
             {
@@ -41,11 +41,11 @@ namespace Hektonian.DataSource.InMemory.Internal
                 throw new ArgumentNullException();
             }
 
-            return new InMemoryReadOnlyDataSet<T>(_store, includes);
+            return new InMemoryReadOnlyDataSet<TEntity>(_store, includes);
         }
 
-        public Task<T> MutateAsync<T>(Func<IAsyncMutableDataSource, Task<T>> mutator)
-        where T: class
+        public Task<TEntity> MutateAsync<TEntity>(Func<IAsyncMutableDataSource, Task<TEntity>> mutator)
+        where TEntity: class
         {
             if (mutator == null)
             {
@@ -62,22 +62,33 @@ namespace Hektonian.DataSource.InMemory.Internal
                 throw new ArgumentNullException(nameof(mutator));
             }
 
-            return mutator(this);
+            _store.BeginTransaction();
+
+            try
+            {
+                var result = mutator(this);
+            }
+            catch (Exception)
+            {
+                _store.Rollback();
+            }
+
+            _store.Commit();
         }
 
-        public IAsyncMutableDataSet<T> Mutate<T>(IEnumerable<string> includes)
-        where T: class
+        public IAsyncMutableDataSet<TEntity> Mutate<TEntity>(IEnumerable<string> includes)
+        where TEntity: class
         {
             if (includes == null)
             {
                 throw new ArgumentNullException(nameof(includes));
             }
 
-            return new InMemoryMutableDataSet<T>(_store);
+            return new InMemoryMutableDataSet<TEntity>(_store);
         }
 
-        public IAsyncMutableDataSet<T> Mutate<T>(params string[] includes)
-        where T: class
+        public IAsyncMutableDataSet<TEntity> Mutate<TEntity>(params string[] includes)
+        where TEntity: class
         {
             if (includes == null)
             {
@@ -89,7 +100,7 @@ namespace Hektonian.DataSource.InMemory.Internal
                 throw new ArgumentNullException();
             }
 
-            return new InMemoryMutableDataSet<T>(_store);
+            return new InMemoryMutableDataSet<TEntity>(_store);
         }
     }
 }

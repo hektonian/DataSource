@@ -10,7 +10,7 @@ using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory.Internal
 {
-    internal class InMemoryReadOnlyDataSet<T> : IAsyncReadOnlyDataSet<T> where T : class
+    internal class InMemoryReadOnlyDataSet<TEntity> : IAsyncReadOnlyDataSet<TEntity> where TEntity : class
     {
         private readonly IInMemoryDataStore _store;
         private readonly IEnumerable<string> _includes;
@@ -21,105 +21,111 @@ namespace Hektonian.DataSource.InMemory.Internal
             _includes = includes;
         }
 
-        public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        public async Task<IEnumerable<TOutput>> GetAllAsync<TOutput>(Func<IQueryable<TEntity>, IQueryable<TOutput>> queryBuilder)
         {
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
             return queryBuilder(
-                    _store.Set<T>()
+                    _store.Set<TEntity>()
                           .AsQueryable()
                 )
                .ToList();
         }
 
-        public Task<TOutput> LastOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> condition)
         {
-            throw new NotImplementedException();
-        }
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> condition)
-        {
-            return _store.Set<T>()
+            return _store.Set<TEntity>()
                          .AsQueryable()
                          .Where(condition)
                          .ToList();
         }
 
-        public async Task<T> FirstAsync(Expression<Func<T, bool>> condition)
+        public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return _store.Set<T>()
-                         .AsQueryable()
-                         .First(condition);
-        }
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
 
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> condition)
-        {
-            return _store.Set<T>()
-                         .AsQueryable()
-                         .FirstOrDefault(condition);
-        }
-
-        public async Task<T> SingleAsync(Expression<Func<T, bool>> condition)
-        {
-            return _store.Set<T>()
+            return _store.Set<TEntity>()
                          .AsQueryable()
                          .Single(condition);
         }
 
-        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> condition)
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> condition)
         {
-            return _store.Set<T>()
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
+            return _store.Set<TEntity>()
                          .AsQueryable()
                          .SingleOrDefault(condition);
         }
 
-        public Task<T> LastAsync(Expression<Func<T, bool>> condition)
+        public async Task<TOutput> FirstAsync<TOutput>(Func<IQueryable<TEntity>, IQueryable<TOutput>> queryBuilder)
         {
-            throw new NotImplementedException();
-        }
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
 
-        public Task<T> LastOrDefaultAsync(Expression<Func<T, bool>> condition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<TOutput> FirstAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
             return queryBuilder(
-                    _store.Set<T>()
+                    _store.Set<TEntity>()
                           .AsQueryable()
                 )
                .First();
         }
 
-        public async Task<TOutput> FirstOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        public async Task<TOutput> FirstOrDefaultAsync<TOutput>(Func<IQueryable<TEntity>, IQueryable<TOutput>> queryBuilder)
         {
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
             return queryBuilder(
-                    _store.Set<T>()
+                    _store.Set<TEntity>()
                           .AsQueryable()
                 )
                .FirstOrDefault();
         }
 
-        public async Task<TOutput> SingleAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        public async Task<TOutput> SingleAsync<TOutput>(Func<IQueryable<TEntity>, IQueryable<TOutput>> queryBuilder)
         {
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
             return queryBuilder(
-                    _store.Set<T>()
+                    _store.Set<TEntity>()
                           .AsQueryable()
                 )
                .Single();
         }
 
-        public async Task<TOutput> SingleOrDefaultAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
+        public async Task<TOutput> SingleOrDefaultAsync<TOutput>(Func<IQueryable<TEntity>, IQueryable<TOutput>> queryBuilder)
         {
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
             return queryBuilder(
-                    _store.Set<T>()
+                    _store.Set<TEntity>()
                           .AsQueryable()
                 )
                .SingleOrDefault();
-        }
-
-        public Task<TOutput> LastAsync<TOutput>(Func<IQueryable<T>, IQueryable<TOutput>> queryBuilder)
-        {
-            throw new NotImplementedException();
         }
     }
 }
