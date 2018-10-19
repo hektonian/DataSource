@@ -55,7 +55,7 @@ namespace Hektonian.DataSource.InMemory.Internal
             return mutator(this);
         }
 
-        public Task MutateAsync(Func<IAsyncMutableDataSource, Task> mutator)
+        public async Task MutateAsync(Func<IAsyncMutableDataSource, Task> mutator)
         {
             if (mutator == null)
             {
@@ -66,7 +66,7 @@ namespace Hektonian.DataSource.InMemory.Internal
 
             try
             {
-                var result = mutator(this);
+                await mutator(this);
             }
             catch (Exception)
             {
