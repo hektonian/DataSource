@@ -4,6 +4,12 @@ namespace Hektonian.DataSource.InMemory.Interfaces
 {
     public interface IInMemoryDataStore
     {
-        ICollection<T> Set<T>() where T : class;
+        ICollection<TEntity> Set<TEntity>() where TEntity : class;
+
+        void BeginTransaction();
+
+        void Commit();
+
+        void Rollback();
     }
 }

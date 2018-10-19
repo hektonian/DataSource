@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hektonian.DataSource.EntityFrameworkCore.Internal
 {
-    internal class EfMutableDataSet<T> : IAsyncMutableDataSet<T>
-    where T: class
+    internal class EfMutableDataSet<TEntity> : IAsyncMutableDataSet<TEntity>
+    where TEntity: class
     {
         private readonly DbContext _db;
-        private readonly IQueryable<T> _querySet;
+        private readonly IQueryable<TEntity> _querySet;
 
         public EfMutableDataSet(DbContext db, IEnumerable<string> navigationPropertyPaths = null)
         {
@@ -22,49 +22,120 @@ namespace Hektonian.DataSource.EntityFrameworkCore.Internal
             navigationPropertyPaths = navigationPropertyPaths ?? Array.Empty<string>();
             _querySet = navigationPropertyPaths
                .Aggregate(
-                    _db.Set<T>(),
-                    (IQueryable<T> set, string navigationPropertyPath) => set.Include(navigationPropertyPath)
+                    _db.Set<TEntity>(),
+                    (IQueryable<TEntity> set, string navigationPropertyPath) => set.Include(navigationPropertyPath)
                 );
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(TEntity entity)
         {
-            _db.Add(entity);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _db.Set<TEntity>().Add(entity);
         }
 
-        public async Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(params TEntity[] entities)
         {
-            _db.AddRange(entities);
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().AddRange(entities);
         }
 
-        public async Task RemoveAsync(T entity)
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            _db.Remove(entity);
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().AddRange(entities);
         }
 
-        public async Task RemoveRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveAsync(TEntity entity)
         {
-            _db.RemoveRange(entities);
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _db.Set<TEntity>().Remove(entity);
         }
 
-        public async Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
+        public async Task RemoveRangeAsync(params TEntity[] entities)
         {
-            _db.RemoveRange(queryBuilder(_querySet));
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().RemoveRange(entities);
         }
 
-        public async Task RemoveAsync(Expression<Func<T, bool>> condition)
+        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
         {
-            _db.RemoveRange(_querySet.Where(condition));
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().RemoveRange(entities);
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task RemoveAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder)
         {
-            _db.Update(entity);
+            if (queryBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
+            _db.Set<TEntity>().RemoveRange(queryBuilder(_querySet));
         }
 
-        public async Task UpdateRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveAsync(Expression<Func<TEntity, bool>> condition)
         {
-            _db.UpdateRange(entities);
+            if (condition == null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
+            _db.Set<TEntity>().RemoveRange(_querySet.Where(condition));
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _db.Set<TEntity>().Update(entity);
+        }
+
+        public async Task UpdateRangeAsync(params TEntity[] entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().UpdateRange(entities);
+            ;
+        }
+
+        public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            _db.Set<TEntity>().UpdateRange(entities);
         }
 
         public Task SaveAsync()

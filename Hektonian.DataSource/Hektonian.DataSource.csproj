@@ -12,7 +12,8 @@
     <Description>An alternative for repositories.</Description>
     <PackageTags>DataSource, data, data-access, data-access-layer, repository</PackageTags>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <Version>1.0.2</Version>
+    <Version>1.0.3-alpha1</Version>
+    <PackageReleaseNotes>https://github.com/hektonian/DataSource/releases/tag/v1.0.3-alpha1</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

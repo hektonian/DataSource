@@ -10,8 +10,8 @@ using Hektonian.DataSource.Interfaces;
 
 namespace Hektonian.DataSource.InMemory.Internal
 {
-    internal class InMemoryMutableDataSet<T> : IAsyncMutableDataSet<T>
-    where T: class
+    internal class InMemoryMutableDataSet<TEntity> : IAsyncMutableDataSet<TEntity>
+    where TEntity: class
     {
         private readonly IInMemoryDataStore _store;
 
@@ -20,39 +20,84 @@ namespace Hektonian.DataSource.InMemory.Internal
             _store = store;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(TEntity entity)
         {
-            _store.Set<T>()
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _store.Set<TEntity>()
                   .Add(entity);
         }
 
-        public async Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(params TEntity[] entities)
         {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            await AddRangeAsync(entities.AsEnumerable());
+        }
+
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
             foreach (var entity in entities)
             {
-                _store.Set<T>()
+                _store.Set<TEntity>()
                       .Add(entity);
             }
         }
 
-        public async Task RemoveAsync(T entity)
+        public async Task RemoveAsync(TEntity entity)
         {
-            _store.Set<T>()
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            _store.Set<TEntity>()
                   .Remove(entity);
         }
 
-        public async Task RemoveRangeAsync(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(params TEntity[] entities)
         {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            await RemoveRangeAsync(entities.AsEnumerable());
+        }
+
+        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
             foreach (var entity in entities)
             {
-                _store.Set<T>()
+                _store.Set<TEntity>()
                       .Remove(entity);
             }
         }
 
-        public async Task RemoveAsync(Func<IQueryable<T>, IQueryable<T>> queryBuilder)
+        public async Task RemoveAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder)
         {
-            var set = _store.Set<T>();
+            if (queryBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(queryBuilder));
+            }
+
+            var set = _store.Set<TEntity>();
 
             foreach (var entity in queryBuilder(set.AsQueryable()))
             {
@@ -60,9 +105,14 @@ namespace Hektonian.DataSource.InMemory.Internal
             }
         }
 
-        public async Task RemoveAsync(Expression<Func<T, bool>> condition)
+        public async Task RemoveAsync(Expression<Func<TEntity, bool>> condition)
         {
-            var set = _store.Set<T>();
+            if (condition is null)
+            {
+                throw new ArgumentNullException(nameof(condition));
+            }
+
+            var set = _store.Set<TEntity>();
 
             foreach (var entity in set.AsQueryable()
                                       .Where(condition))
@@ -71,9 +121,14 @@ namespace Hektonian.DataSource.InMemory.Internal
             }
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(TEntity entity)
         {
-            var set = _store.Set<T>();
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            var set = _store.Set<TEntity>();
 
             if (set.Remove(entity))
             {
@@ -81,9 +136,24 @@ namespace Hektonian.DataSource.InMemory.Internal
             }
         }
 
-        public async Task UpdateRangeAsync(IEnumerable<T> entities)
+        public async Task UpdateRangeAsync(params TEntity[] entities)
         {
-            var set = _store.Set<T>();
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            await UpdateRangeAsync(entities.AsEnumerable());
+        }
+
+        public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            if (entities is null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            var set = _store.Set<TEntity>();
 
             foreach (var entity in entities.Intersect(set))
             {

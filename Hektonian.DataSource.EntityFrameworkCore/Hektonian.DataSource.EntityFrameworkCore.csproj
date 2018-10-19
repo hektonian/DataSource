@@ -10,7 +10,8 @@
     <Description>An Entity Framework Core implementation of Hektonian.DataSource</Description>
     <PackageTags>DataSource, data, data-access, data-access-layer, repository, EntityFrameworkCore, EntityFramework, EF, O/RM, entity-framework-core</PackageTags>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <Version>1.0.2</Version>
+    <Version>1.0.3-alpha1</Version>
+    <PackageReleaseNotes>https://github.com/hektonian/DataSource/releases/tag/v1.0.3-alpha1</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
